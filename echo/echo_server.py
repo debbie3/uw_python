@@ -12,6 +12,7 @@ import sys
 host = '' 
 port = 50000 
 
+#adding an optional argument at commandline
 if len(sys.argv) > 1:
     port = int(sys.argv[1])
 
