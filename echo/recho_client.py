@@ -24,8 +24,13 @@ s = socket.socket(socket.AF_INET,
                   socket.SOCK_STREAM) 
 s.connect((host,port)) 
 #s.send('Hello, world') 
-s.send(raw_input('write message here: '))
-data = s.recv(size) 
-s.close() 
-print 'from (%s,%s) %s' % (host, port, data)
 
+message = raw_input('write message here: ')
+
+while message != '':
+    s.send(message)
+    data = s.recv(size) 
+    print 'from (%s,%s) %s' % (host, port, data)
+    message = raw_input('write another message here: ')
+
+s.close()
