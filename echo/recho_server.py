@@ -10,7 +10,7 @@ import socket
 import sys
 
 host = '' 
-port = 50000 
+port = 50002 
 
 #adding an optional argument at commandline
 if len(sys.argv) > 1:
@@ -28,13 +28,17 @@ s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
 s.bind((host,port)) 
 
-print 'echo_server listening on port', port
+print 'recho_server listening on port', port
 s.listen(backlog) 
 
 while True: 
     client, address = s.accept()
-    data = client.recv(size) 
-    if data: 
-        client.send('debbie3: %s' % data) 
-    print 'from %s: %s' % (address, data)
-    client.close()
+    print 'accepted connection from ', address
+    while True:
+        data = client.recv(size) 
+        if data: 
+            client.send('debbie3: %s' % data) 
+        else: # no data, client sent empty msg or closed socket
+            client.close()
+            print 'closed connection'
+            break
